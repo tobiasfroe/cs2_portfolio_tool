@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CS2 Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app">
+    <header class="app__header">
+      <div class="app__title-group">
+        <h1>CS2 Portfolio</h1>
+        <p>Steam Community Market · Letzte Aktualisierung: <span id="lastUpdated"></span></p>
+      </div>
+      <div class="app__summary">
+        <div>
+          <span class="summary__label">Gesamtwert</span>
+          <span class="summary__value" id="totalValue"></span>
+        </div>
+        <div>
+          <span class="summary__label">Gesamtänderung (24h)</span>
+          <span class="summary__change" id="totalChange"></span>
+        </div>
+      </div>
+    </header>
+
+    <section class="card">
+      <div class="card__header">
+        <div>
+          <h2>Holdings</h2>
+          <p>CS2 Items · Quelle: Steam Community Market</p>
+        </div>
+        <div class="card__header-summary">
+          <span id="itemsCount"></span>
+          <span id="casesCount"></span>
+        </div>
+      </div>
+      <div class="table">
+        <div class="table__header">
+          <span class="table__col table__col--item">Item</span>
+          <span class="table__col">Anzahl</span>
+          <span class="table__col">Gesamtwert</span>
+          <span class="table__col">Änderung</span>
+          <span class="table__col table__col--allocation">Allokation</span>
+        </div>
+        <div class="table__body" id="portfolioRows"></div>
+      </div>
+    </section>
+
+    <footer class="app__footer">
+      <p>Marktdaten basieren auf öffentlichen Preisen des <a href="https://steamcommunity.com/market/" target="_blank" rel="noopener">Steam Community Market</a>.</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
