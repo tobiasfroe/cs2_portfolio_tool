@@ -4,10 +4,10 @@ const portfolioData = [
     type: 'Case',
     description: '5000x · Normal Grade Container',
     quantity: 5000,
-    unitPrice: 0.18,
+    unitPrice: 1.89,
+    currency: 'USD',
     changeValue: -125.0,
-    changePercent: -12.9,
-    image: 'https://steamcommunity-a.akamaihd.net/economy/image/f0q0AR83yjEp11TWMupfOXHxL9iqwJstiAhKq5yRvPrkt8/128fx128f',
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_fr3AV6aD8O6BpdKKQVmPEwr1zs-c8Tnngl09w52zTmY2sc3jBag8jXpohE_lK7Ede7E2Kfw/360fx360f',
     marketUrl: 'https://steamcommunity.com/market/listings/730/Prisma%20Case'
   },
   {
@@ -16,9 +16,9 @@ const portfolioData = [
     description: '3x · Extraordinary Gloves Collection',
     quantity: 3,
     unitPrice: 2.55,
+    currency: 'EUR',
     changeValue: 3.75,
-    changePercent: 5.2,
-    image: 'https://steamcommunity-a.akamaihd.net/economy/image/cdljhcVLY0fjtYVFmKuhCwHMTZqjC9nGZRQ2JWpeb1wD/128fx128f',
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGJKz2lu_XsnXwtmkJjSU91dh8bj35VTqVBP4io_frHcVuPaoafU1JqiVWWSVkux15OQ8Giiylk0k5mvTnIqpd3PCaQIhWMYkE_lK7EcNeCKW-w/360fx360f',
     marketUrl: 'https://steamcommunity.com/market/listings/730/Glove%20Case'
   },
   {
@@ -27,12 +27,21 @@ const portfolioData = [
     description: '1x · Factory New',
     quantity: 1,
     unitPrice: 17.85,
+    currency: 'EUR',
     changeValue: 1.12,
-    changePercent: 2.7,
-    image: 'https://steamcommunity-a.akamaihd.net/economy/image/4b8nE2HnIrklJy1DyWv3Y9o0RQ_8ljyiE4bItKOM4iP6HTR1X6K8OiyFXp1kXEiXS_5icPf3HG0WcU-nVTY8Gg/128fx128f',
+    image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_eAMWrEwL9Jo-loWz22hyIrujqNjsH8dn6ePwB2DpEmFuAMt0HulYa1Nu2z4QWPjt9NnCX63H9M5ys96r1QT-N7rZDTLd1E/360fx360f',
     marketUrl: 'https://steamcommunity.com/market/listings/730/M4A1-S%20%7C%20Leaded%20Glass%20(Factory%20New)'
   }
 ];
+
+const USD_TO_EUR = 0.92;
+
+const getPriceInEur = (price, currency = 'EUR') => {
+  if (currency === 'USD') {
+    return price * USD_TO_EUR;
+  }
+  return price;
+};
 
 const formatter = new Intl.NumberFormat('de-DE', {
   style: 'currency',
@@ -51,7 +60,10 @@ const lastUpdatedEl = document.getElementById('lastUpdated');
 const itemsCountEl = document.getElementById('itemsCount');
 const casesCountEl = document.getElementById('casesCount');
 
-const totalValue = portfolioData.reduce((sum, item) => sum + item.unitPrice * item.quantity, 0);
+const totalValue = portfolioData.reduce(
+  (sum, item) => sum + getPriceInEur(item.unitPrice, item.currency) * item.quantity,
+  0
+);
 const totalChange = portfolioData.reduce((sum, item) => sum + item.changeValue, 0);
 
 const caseItems = portfolioData.filter((item) => item.type === 'Case');
@@ -64,9 +76,12 @@ portfolioData.forEach((item) => {
   row.rel = 'noopener';
   row.className = 'table__row';
 
-  const totalItemValue = item.unitPrice * item.quantity;
+  const unitPriceEur = getPriceInEur(item.unitPrice, item.currency);
+  const totalItemValue = unitPriceEur * item.quantity;
   const allocation = (totalItemValue / totalValue) * 100;
   const isPositive = item.changeValue >= 0;
+  const previousValue = totalItemValue - item.changeValue;
+  const changePercent = previousValue !== 0 ? (item.changeValue / previousValue) * 100 : 0;
 
   row.innerHTML = `
     <span class="table__col table__col--item">
@@ -80,7 +95,7 @@ portfolioData.forEach((item) => {
     </span>
     <span class="table__col amount">${item.quantity.toLocaleString('de-DE')}</span>
     <span class="table__col value">${formatter.format(totalItemValue)}</span>
-    <span class="table__col change" data-positive="${isPositive}">${formatChange(item.changeValue, item.changePercent)}</span>
+    <span class="table__col change" data-positive="${isPositive}">${formatChange(item.changeValue, changePercent)}</span>
     <span class="table__col allocation">
       <span class="allocation__progress"><span style="width: ${allocation.toFixed(1)}%"></span></span>
       <span class="allocation__label">${allocation.toFixed(1)}%</span>
