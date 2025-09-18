@@ -2,7 +2,7 @@ const portfolioData = [
   {
     name: 'Prisma Case',
     type: 'Case',
-    description: '5000x · Normal Grade Container',
+    description: 'Normal Grade Container',
     quantity: 5000,
     unitPrice: 1.89,
     currency: 'USD',
@@ -14,7 +14,7 @@ const portfolioData = [
   {
     name: 'Glove Case',
     type: 'Case',
-    description: '3x · Extraordinary Gloves Collection',
+    description: 'Extraordinary Gloves Collection',
     quantity: 3,
     unitPrice: 2.55,
     currency: 'EUR',
@@ -26,7 +26,7 @@ const portfolioData = [
   {
     name: 'M4A1-S | Leaded Glass (Fabrikneu)',
     type: 'Rifle Skin',
-    description: '1x · Factory New',
+    description: 'Factory New',
     quantity: 1,
     unitPrice: 17.85,
     currency: 'EUR',
