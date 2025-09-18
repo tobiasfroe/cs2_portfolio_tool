@@ -1,0 +1,16 @@
+{
+  "name": "cs2-portfolio-tool",
+  "version": "1.0.0",
+  "private": true,
+  "description": "CS2 portfolio viewer with Steam market price proxy",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

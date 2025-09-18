@@ -38,7 +38,7 @@ const portfolioData = [
 ];
 
 const USD_TO_EUR = 0.92;
-const MARKET_PRICE_PROXY = '';
+const MARKET_PRICE_PROXY = '/api/price';
 
 const getPriceInEur = (price, currency = 'EUR') => {
   if (currency === 'USD') {
@@ -65,6 +65,15 @@ const buildMarketPriceUrl = (params) => {
 
   if (!MARKET_PRICE_PROXY) {
     return baseUrl;
+  }
+
+  if (MARKET_PRICE_PROXY.startsWith('/')) {
+    const proxyParams = new URLSearchParams({
+      appid: params.get('appid') ?? '730',
+      currency: params.get('currency') ?? '3',
+      marketHashName: params.get('market_hash_name') ?? ''
+    });
+    return `${MARKET_PRICE_PROXY}?${proxyParams.toString()}`;
   }
 
   if (MARKET_PRICE_PROXY.includes('{url}')) {
