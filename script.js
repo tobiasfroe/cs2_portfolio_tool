@@ -34,11 +34,219 @@ const portfolioData = [
     image: 'https://community.akamai.steamstatic.com/economy/image/i0CoZ81Ui0m-9KwlBY1L_18myuGuq1wfhWSaZgMttyVfPaERSR0Wqmu7LAocGIGz3UqlXOLrxM-vMGmW8VNxu5Dx60noTyL8ypexwjFS4_ega6F_H_eAMWrEwL9Jo-loWz22hyIrujqNjsH8dn6ePwB2DpEmFuAMt0HulYa1Nu2z4QWPjt9NnCX63H9M5ys96r1QT-N7rZDTLd1E/360fx360f',
     marketUrl: 'https://steamcommunity.com/market/listings/730/M4A1-S%20%7C%20Leaded%20Glass%20(Factory%20New)',
     marketHashName: 'M4A1-S | Leaded Glass (Factory New)'
+  },
+  {
+    name: '★ Huntsman Knife | Lore (Minimal Wear)',
+    type: 'Knife Skin',
+    description: 'Minimal Wear',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVW7ZFPrVEwEKg8P9n0CEd7roFwpfYlx9Rv8w0YVkU6SSJCoKRd6tNJZw7OVllHTVtG_04zMHl0Z3NBu-6hLGIllLfPImkQ6Yj2yJaLnamqtuCEmm8J-MNwjOSRrOWpjlLvuxs/360fx360f',
+    marketUrl: 'https://steamcommunity.com/market/listings/730/%E2%98%85%20Huntsman%20Knife%20%7C%20Lore%20(Minimal%20Wear)',
+    marketHashName: '★ Huntsman Knife | Lore (Minimal Wear)'
+  },
+  {
+    name: 'AWP | Asiimov (Field-Tested)',
+    type: 'Sniper Skin',
+    description: 'Field-Tested',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVW7ZFPrVEwEKg8P9n0CEd7roFwpfYlx9Rv8w0YVkU6SSJCoKRd6tNDVxovKVD-EQj1jkdPSZGItdjMN4m3KTabkLfIclwSvN2wzdjSwaz4YLiHkjJXvsFo2YrF9d3xinQ-uxJmNTyW0w/360fx360f',
+    marketUrl: 'https://steamcommunity.com/market/listings/730/AWP%20%7C%20Asiimov%20(Field-Tested)',
+    marketHashName: 'AWP | Asiimov (Field-Tested)'
+  },
+  {
+    name: 'SSG 08 | Dragonfire (Factory New)',
+    type: 'Sniper Skin',
+    description: 'Factory New',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVW7ZFPrVEwEKg8P9n0CEd7roFwpfYlx9Rv8w0YVkU6SSJCoKRd6tNDFzh7MZzHJWNe6h52MXW9iJzlVLLWqLTk0w6eYIGwSuYjvl9XTz6HwMeODJzgJvMBt2LvA9tPz3gS37wAB3q_7HkOaGyw/360fx360f',
+    marketUrl: 'https://steamcommunity.com/market/listings/730/SSG%2008%20%7C%20Dragonfire%20(Factory%20New)',
+    marketHashName: 'SSG 08 | Dragonfire (Factory New)'
+  },
+  {
+    name: 'AK-47 | Redline (Field-Tested)',
+    type: 'Rifle Skin',
+    description: 'Field-Tested',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVW7ZFPrVEwEKg8P9n0CEd7roFwpfYlx9Rv8w0YVkU6SSJCoKRd6tNDJy5GVVIOITtjsktfRWWNxYzQE-bu3PABnw7qYdDBH4N62lYGJwaqmYbjUzjsGvsF007fOrY-l2Qe27hUpIWU7Yw/360fx360f',
+    marketUrl: 'https://steamcommunity.com/market/listings/730/AK-47%20%7C%20Redline%20(Field-Tested)',
+    marketHashName: 'AK-47 | Redline (Field-Tested)'
+  },
+  {
+    name: 'M4A4 | Buzz Kill (Field-Tested)',
+    type: 'Rifle Skin',
+    description: 'Field-Tested',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVW7ZFPrVEwEKg8P9n0CEd7roFwpfYlx9Rv8w0YVkU6SSJCoKRd6tNEFxYrFZjmHSNt3ktaOV2VxZDBCfq-kfg02weaYdjoXuYS1w4PcxaerYr2HwjsI6ZJ1j7iUpN3j3Qfk-kE_MGrwTQ/360fx360f',
+    marketUrl: 'https://steamcommunity.com/market/listings/730/M4A4%20%7C%20Buzz%20Kill%20(Field-Tested)',
+    marketHashName: 'M4A4 | Buzz Kill (Field-Tested)'
+  },
+  {
+    name: 'MP7 | Fade (Factory New)',
+    type: 'SMG Skin',
+    description: 'Factory New',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVW7ZFPrVEwEKg8P9n0CEd7roFwpfYlx9Rv8w0YVkU6SSJCoKRd6tNEPwpHFXD2FQobhh97RSjJgYj0IUr2kYABp1fLJIzlGvozvxNnZyq714OKElToDv8Fg3ruU9tXz2gWw-xxsPA6z-g/360fx360f',
+    marketUrl: 'https://steamcommunity.com/market/listings/730/MP7%20%7C%20Fade%20(Factory%20New)',
+    marketHashName: 'MP7 | Fade (Factory New)'
+  },
+  {
+    name: 'Five-SeveN | Heat Treated (Minimal Wear)',
+    type: 'Pistol Skin',
+    description: 'Minimal Wear',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVW7ZFPrVEwEKg8P9n0CEd7roFwpfYlx9Rv8w0YVkU6SSJCoKRd6tNDNx5WVRTXJTNS4lYPWY2JnZTpRe7utZxp0iaSccTxE7YylkNPTwfKkNOXVzIsAs8cy2LzAooWm2ARr-kVg0Q/360fx360f',
+    marketUrl: 'https://steamcommunity.com/market/listings/730/Five-SeveN%20%7C%20Heat%20Treated%20(Minimal%20Wear)',
+    marketHashName: 'Five-SeveN | Heat Treated (Minimal Wear)'
+  },
+  {
+    name: 'Tec-9 | Remote Control (Minimal Wear)',
+    type: 'Pistol Skin',
+    description: 'Minimal Wear',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVW7ZFPrVEwEKg8P9n0CEd7roFwpfYlx9Rv8w0YVkU6SSJCoKRd6tNHNyJ6MZzjNFoWwldWKWGcgazMReMG9YFI5h62RcjpEu9SpkoHBxPKiNbqlzjgE6JAhi7iQ9taj2lC28kAxZ2rzJbVQnwE/360fx360f',
+    marketUrl: 'https://steamcommunity.com/market/listings/730/Tec-9%20%7C%20Remote%20Control%20(Minimal%20Wear)',
+    marketHashName: 'Tec-9 | Remote Control (Minimal Wear)'
+  },
+  {
+    name: 'StatTrak™ UMP-45 | Wild Child (Field-Tested)',
+    type: 'SMG Skin',
+    description: 'Field-Tested',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: 'https://community.akamai.steamstatic.com/economy/image/-9a81dlWLwJ2UUGcVs_nsVW7ZFPrVEwEKg8P9n0CEd7roFwpfYlx9Rv8w0YVkU6SSJCoKRd6tNEIzY6RVTPGT4G1lY6CWmNyazEDY7z3KFJfha6TczpD6dDsmdjcxa_0YuubwjIAvpBw2r3AoIjgiVGw8kFkMDr1Ew/360fx360f',
+    marketUrl: 'https://steamcommunity.com/market/listings/730/StatTrak%E2%84%A2%20UMP-45%20%7C%20Wild%20Child%20(Field-Tested)',
+    marketHashName: 'StatTrak™ UMP-45 | Wild Child (Field-Tested)'
+  },
+  {
+    name: 'P250 | Vino Primo (Minimal Wear)',
+    type: 'Pistol Skin',
+    description: 'Minimal Wear',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: null,
+    marketUrl: 'https://steamcommunity.com/market/listings/730/P250%20%7C%20Vino%20Primo%20(Minimal%20Wear)',
+    marketHashName: 'P250 | Vino Primo (Minimal Wear)'
+  },
+  {
+    name: 'USP-S | Cyrex (Minimal Wear)',
+    type: 'Pistol Skin',
+    description: 'Minimal Wear',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: null,
+    marketUrl: 'https://steamcommunity.com/market/listings/730/USP-S%20%7C%20Cyrex%20(Minimal%20Wear)',
+    marketHashName: 'USP-S | Cyrex (Minimal Wear)'
+  },
+  {
+    name: 'StatTrak™ Desert Eagle | Trigger Discipline (Field-Tested)',
+    type: 'Pistol Skin',
+    description: 'Field-Tested',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: null,
+    marketUrl: 'https://steamcommunity.com/market/listings/730/StatTrak%E2%84%A2%20Desert%20Eagle%20%7C%20Trigger%20Discipline%20(Field-Tested)',
+    marketHashName: 'StatTrak™ Desert Eagle | Trigger Discipline (Field-Tested)'
+  },
+  {
+    name: 'MP7 | Anodized Navy (Factory New)',
+    type: 'SMG Skin',
+    description: 'Factory New',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: null,
+    marketUrl: 'https://steamcommunity.com/market/listings/730/MP7%20%7C%20Anodized%20Navy%20(Factory%20New)',
+    marketHashName: 'MP7 | Anodized Navy (Factory New)'
+  },
+  {
+    name: 'SG 553 | Anodized Navy (Factory New)',
+    type: 'Rifle Skin',
+    description: 'Factory New',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: null,
+    marketUrl: 'https://steamcommunity.com/market/listings/730/SG%20553%20%7C%20Anodized%20Navy%20(Factory%20New)',
+    marketHashName: 'SG 553 | Anodized Navy (Factory New)'
+  },
+  {
+    name: 'Glock-18 | Nuclear Garden (Field-Tested)',
+    type: 'Pistol Skin',
+    description: 'Field-Tested',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: null,
+    marketUrl: 'https://steamcommunity.com/market/listings/730/Glock-18%20%7C%20Nuclear%20Garden%20(Field-Tested)',
+    marketHashName: 'Glock-18 | Nuclear Garden (Field-Tested)'
+  },
+  {
+    name: 'MAC-10 | Candy Apple (Factory New)',
+    type: 'SMG Skin',
+    description: 'Factory New',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: null,
+    marketUrl: 'https://steamcommunity.com/market/listings/730/MAC-10%20%7C%20Candy%20Apple%20(Factory%20New)',
+    marketHashName: 'MAC-10 | Candy Apple (Factory New)'
+  },
+  {
+    name: 'Dual Berettas | Cobalt Quartz (Factory New)',
+    type: 'Pistol Skin',
+    description: 'Factory New',
+    quantity: 1,
+    unitPrice: 0,
+    currency: 'EUR',
+    changeValue: 0,
+    image: null,
+    marketUrl: 'https://steamcommunity.com/market/listings/730/Dual%20Berettas%20%7C%20Cobalt%20Quartz%20(Factory%20New)',
+    marketHashName: 'Dual Berettas | Cobalt Quartz (Factory New)'
   }
 ];
 
 const USD_TO_EUR = 0.92;
 const MARKET_PRICE_PROXY = '/api/price';
+const ITEM_META_PROXY = '/api/item-meta';
+const BLANK_IMAGE = 'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==';
+
+const imageCache = new Map();
 
 const getPriceInEur = (price, currency = 'EUR') => {
   if (currency === 'USD') {
@@ -85,6 +293,42 @@ const buildMarketPriceUrl = (params) => {
   }
 
   return `${MARKET_PRICE_PROXY}${baseUrl}`;
+};
+
+const fetchItemImage = async (marketHashName) => {
+  if (!marketHashName) {
+    return null;
+  }
+
+  if (imageCache.has(marketHashName)) {
+    return imageCache.get(marketHashName);
+  }
+
+  if (!ITEM_META_PROXY) {
+    imageCache.set(marketHashName, null);
+    return null;
+  }
+
+  try {
+    const params = new URLSearchParams({ marketHashName });
+    const response = await fetch(`${ITEM_META_PROXY}?${params.toString()}`);
+
+    if (!response.ok) {
+      throw new Error(`Steam item meta responded with ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    if (data.success && data.image) {
+      imageCache.set(marketHashName, data.image);
+      return data.image;
+    }
+  } catch (error) {
+    console.error(`Bild konnte für ${marketHashName} nicht geladen werden:`, error);
+  }
+
+  imageCache.set(marketHashName, null);
+  return null;
 };
 
 const parsePriceString = (priceString) => {
@@ -168,6 +412,13 @@ const renderPortfolio = (items) => {
     row.rel = 'noopener';
     row.className = 'table__row';
 
+    if (item.image) {
+      imageCache.set(item.marketHashName, item.image);
+    }
+
+    const cachedImage = imageCache.get(item.marketHashName);
+    const imageUrl = item.image || cachedImage || BLANK_IMAGE;
+
     const unitPriceEur = getPriceInEur(item.unitPrice, item.currency);
     const totalItemValue = unitPriceEur * item.quantity;
     const allocation = totalValue !== 0 ? (totalItemValue / totalValue) * 100 : 0;
@@ -178,7 +429,7 @@ const renderPortfolio = (items) => {
     row.innerHTML = `
       <span class="table__col table__col--item">
         <span class="item__image">
-          <img src="${item.image}" alt="${item.name}" loading="lazy" />
+          <img src="${imageUrl}" alt="${item.name}" loading="lazy" />
         </span>
         <span class="item__meta">
           <span class="item__title">${item.name}</span>
@@ -193,6 +444,18 @@ const renderPortfolio = (items) => {
         <span class="allocation__label">${allocation.toFixed(1)}%</span>
       </span>
     `;
+
+    const imgEl = row.querySelector('img');
+
+    if (!item.image && cachedImage === undefined) {
+      fetchItemImage(item.marketHashName).then((fetchedImage) => {
+        if (fetchedImage) {
+          imgEl.src = fetchedImage;
+        }
+      });
+    } else if (!item.image && cachedImage) {
+      imgEl.src = cachedImage;
+    }
 
     portfolioRows.appendChild(row);
   });
