@@ -1,0 +1,13 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradGlove" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4f6ef7"/>
+      <stop offset="100%" stop-color="#7d4bff"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="112" height="112" rx="24" fill="url(#gradGlove)"/>
+  <path d="M40 80c0-18 12-32 24-32s24 14 24 32" fill="none" stroke="rgba(255,255,255,0.7)" stroke-width="10" stroke-linecap="round"/>
+  <path d="M36 68c4-16 16-30 28-30s24 14 28 30" fill="none" stroke="rgba(0,0,0,0.2)" stroke-width="6" stroke-linecap="round"/>
+  <path d="M48 88c0 8 8 16 16 16s16-8 16-16" fill="none" stroke="#fff" stroke-opacity="0.85" stroke-width="6" stroke-linecap="round"/>
+  <circle cx="64" cy="52" r="10" fill="rgba(255,255,255,0.35)"/>
+</svg>

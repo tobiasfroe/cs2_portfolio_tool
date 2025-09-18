@@ -1,0 +1,17 @@
+<svg width="128" height="128" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="gradRifle" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2c3e50"/>
+      <stop offset="100%" stop-color="#5a77ff"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a8e4ff"/>
+      <stop offset="100%" stop-color="#4d8cff"/>
+    </linearGradient>
+  </defs>
+  <rect x="8" y="8" width="112" height="112" rx="28" fill="url(#gradRifle)"/>
+  <path d="M28 72h72l12-12-12-12H48l-8-8H32" fill="none" stroke="#101827" stroke-width="12" stroke-linecap="round" stroke-linejoin="round" opacity="0.45"/>
+  <path d="M28 68h70l10-10-10-10H50l-9-9H32" fill="none" stroke="url(#glass)" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="74" y="54" width="12" height="28" rx="4" fill="rgba(255,255,255,0.4)"/>
+  <circle cx="44" cy="80" r="6" fill="rgba(255,255,255,0.4)"/>
+</svg>
