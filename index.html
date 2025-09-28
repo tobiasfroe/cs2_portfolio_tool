@@ -28,6 +28,23 @@
       </div>
     </header>
 
+    <section class="card card--history">
+      <div class="card__header">
+        <div>
+          <h2>Portfolioentwicklung</h2>
+          <p>Gesamtwert der letzten 30 Tage</p>
+        </div>
+        <div class="card__header-summary card__header-summary--history">
+          <span id="historyRange">–</span>
+        </div>
+      </div>
+      <div class="history-chart">
+        <canvas id="historyChart"></canvas>
+        <div class="history-chart__tooltip" id="historyTooltip" hidden></div>
+        <div class="history-chart__empty" id="historyEmpty">Keine Verlaufsdaten verfügbar.</div>
+      </div>
+    </section>
+
     <section class="card">
       <div class="card__header">
         <div>
