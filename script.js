@@ -193,6 +193,7 @@ const parsePriceString = (priceString) => {
   }
 
   const normalized = priceString
+    .trim()
     .replace(/\./g, '')
     .replace(',', '.')
     .replace(/[^\d.-]/g, '');
@@ -221,15 +222,19 @@ const fetchLowestPrice = async (item) => {
 
     const data = await response.json();
 
-    if (data.success && data.lowest_price) {
-      const price = parsePriceString(data.lowest_price);
+    if (data.success) {
+      const priceString = data.lowest_price ?? data.median_price ?? null;
 
-      if (price !== null) {
-        return {
-          ...item,
-          unitPrice: price,
-          currency: 'EUR'
-        };
+      if (priceString) {
+        const price = parsePriceString(priceString);
+
+        if (price !== null) {
+          return {
+            ...item,
+            unitPrice: price,
+            currency: 'EUR'
+          };
+        }
       }
     }
   } catch (error) {

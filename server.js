@@ -48,6 +48,38 @@ app.get('/api/price', async (req, res) => {
   }
 });
 
+const decodeSteamImageUrl = (value) => {
+  if (!value) {
+    return null;
+  }
+
+  try {
+    const normalized = value.replace(/"/g, '\"');
+    return JSON.parse(`"${normalized}"`);
+  } catch (error) {
+    return value
+      .replace(/\\\//g, '/')
+      .replace(/\\u0026/g, '&')
+      .replace(/&amp;/g, '&');
+  }
+};
+
+const extractSteamImageUrl = (html) => {
+  const metaMatch = html.match(/<meta[^>]+property=["']og:image["'][^>]+content=["']([^"']+)["']/i);
+
+  if (metaMatch && metaMatch[1]) {
+    return decodeSteamImageUrl(metaMatch[1]);
+  }
+
+  const genericMatch = html.match(/https:\/\/[^"\\]*economy\/image\/[^"\\]*/);
+
+  if (genericMatch && genericMatch[0]) {
+    return decodeSteamImageUrl(genericMatch[0]);
+  }
+
+  return null;
+};
+
 app.get('/api/item-meta', async (req, res) => {
   const marketHashName = req.query.marketHashName;
 
@@ -75,8 +107,7 @@ app.get('/api/item-meta', async (req, res) => {
     }
 
     const html = await response.text();
-    const match = html.match(/https:\/\/[^"\\]*economy\/image\/[^"\\]*/);
-    const image = match ? match[0] : null;
+    const image = extractSteamImageUrl(html);
 
     imageCache.set(marketHashName, { image, timestamp: Date.now() });
 
