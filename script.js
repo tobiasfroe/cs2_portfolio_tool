@@ -157,7 +157,15 @@ const fetchItemImage = async (marketHashName) => {
   }
 
   if (imageCache.has(marketHashName)) {
-    return imageCache.get(marketHashName);
+    const cachedValue = imageCache.get(marketHashName);
+
+    if (cachedValue === null) {
+      return null;
+    }
+
+    if (typeof cachedValue === 'string' && !cachedValue.startsWith('http')) {
+      return cachedValue;
+    }
   }
 
   if (!ITEM_META_PROXY) {
@@ -193,6 +201,7 @@ const parsePriceString = (priceString) => {
   }
 
   const normalized = priceString
+    .trim()
     .replace(/\./g, '')
     .replace(',', '.')
     .replace(/[^\d.-]/g, '');
@@ -221,15 +230,19 @@ const fetchLowestPrice = async (item) => {
 
     const data = await response.json();
 
-    if (data.success && data.lowest_price) {
-      const price = parsePriceString(data.lowest_price);
+    if (data.success) {
+      const priceString = data.lowest_price ?? data.median_price ?? null;
 
-      if (price !== null) {
-        return {
-          ...item,
-          unitPrice: price,
-          currency: 'EUR'
-        };
+      if (priceString) {
+        const price = parsePriceString(priceString);
+
+        if (price !== null) {
+          return {
+            ...item,
+            unitPrice: price,
+            currency: 'EUR'
+          };
+        }
       }
     }
   } catch (error) {
@@ -268,12 +281,8 @@ const renderPortfolio = (items) => {
     row.rel = 'noopener';
     row.className = 'table__row';
 
-    if (item.image) {
-      imageCache.set(item.marketHashName, item.image);
-    }
-
     const cachedImage = imageCache.get(item.marketHashName);
-    const imageUrl = item.image || cachedImage || BLANK_IMAGE;
+    const imageUrl = cachedImage || item.image || BLANK_IMAGE;
 
     const unitPriceEur = getPriceInEur(item.unitPrice, item.currency);
     const totalItemValue = unitPriceEur * item.quantity;
@@ -303,14 +312,15 @@ const renderPortfolio = (items) => {
 
     const imgEl = row.querySelector('img');
 
-    if (!item.image && cachedImage === undefined) {
+    const shouldFetchImage = Boolean(item.marketHashName) &&
+      (cachedImage === undefined || (typeof cachedImage === 'string' && cachedImage.startsWith('http')));
+
+    if (shouldFetchImage) {
       fetchItemImage(item.marketHashName).then((fetchedImage) => {
-        if (fetchedImage) {
+        if (fetchedImage && fetchedImage !== imgEl.src) {
           imgEl.src = fetchedImage;
         }
       });
-    } else if (!item.image && cachedImage) {
-      imgEl.src = cachedImage;
     }
 
     portfolioRows.appendChild(row);
