@@ -172,6 +172,7 @@ const renderPortfolio = (snapshot) => {
     const shouldFetchImage = Boolean(item.marketHashName) &&
       (cachedImage === undefined || (typeof cachedImage === 'string' && cachedImage.startsWith('http')));
 
+
     if (shouldFetchImage) {
       fetchItemImage(item.marketHashName).then((fetchedImage) => {
         if (fetchedImage && fetchedImage !== imgEl.src) {

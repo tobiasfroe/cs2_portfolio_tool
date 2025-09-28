@@ -12,6 +12,7 @@ const STEAM_PRICE_ENDPOINT = 'https://steamcommunity.com/market/priceoverview/';
 const STEAM_LISTING_BASE = 'https://steamcommunity.com/market/listings/730/';
 const PORTFOLIO_DATA_PATH = path.join(__dirname, 'data', 'portfolio.json');
 const PORTFOLIO_HISTORY_PATH = path.join(__dirname, 'data', 'history.json');
+
 const IMAGE_CACHE_TTL = 1000 * 60 * 60 * 24 * 30; // 30 days
 const IMAGE_CACHE_DIR = path.join(__dirname, 'cached_images');
 const IMAGE_CACHE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp'];
@@ -350,6 +351,7 @@ app.get('/api/history', async (req, res) => {
     return res.status(500).json({ success: false, error: 'history_load_failed' });
   }
 });
+
 
 app.get('/api/price', async (req, res) => {
   const appId = (req.query.appid || '730').toString();
