@@ -47,7 +47,7 @@ const fetchJson = async (url) => {
 };
 
 const fetchPortfolioSnapshot = () => fetchJson(PORTFOLIO_ENDPOINT);
-const fetchHistoryEntries = () => fetchJson(HISTORY_ENDPOINT);
+const fetchHistoryEntries = (limit = 60) => fetchJson(`${HISTORY_ENDPOINT}?limit=${limit}`);
 
 const fetchItemImage = async (marketHashName) => {
   if (!marketHashName) {
@@ -212,6 +212,18 @@ const updateHistoryRange = (entries) => {
     return;
   }
 
+
+  if (entries.length === 1) {
+    const onlyDate = new Date(entries[0].date);
+    historyRangeEl.textContent = onlyDate.toLocaleDateString('de-DE', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+    return;
+  }
+
+
   const firstDate = new Date(entries[0].date);
   const lastDate = new Date(entries[entries.length - 1].date);
   const sameYear = firstDate.getFullYear() === lastDate.getFullYear();
@@ -307,8 +319,9 @@ const drawHistoryChart = () => {
   });
 
   const gradient = ctx.createLinearGradient(0, padding.top, 0, height - padding.bottom);
-  gradient.addColorStop(0, 'rgba(79, 138, 255, 0.35)');
-  gradient.addColorStop(1, 'rgba(79, 138, 255, 0.05)');
+
+  gradient.addColorStop(0, 'rgba(79, 138, 255, 0.28)');
+  gradient.addColorStop(1, 'rgba(79, 138, 255, 0)');
 
   ctx.beginPath();
   ctx.moveTo(points[0].x, height - padding.bottom);
@@ -403,7 +416,7 @@ const initialize = async () => {
   try {
     const [snapshot, history] = await Promise.all([
       fetchPortfolioSnapshot(),
-      fetchHistoryEntries()
+      fetchHistoryEntries(90)
     ]);
 
     if (snapshot?.success) {

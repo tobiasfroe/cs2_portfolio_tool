@@ -107,6 +107,7 @@ body {
 .history-chart {
   position: relative;
   height: 280px;
+  overflow: hidden;
 }
 
 .history-chart canvas {

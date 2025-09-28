@@ -12,15 +12,21 @@ const STEAM_PRICE_ENDPOINT = 'https://steamcommunity.com/market/priceoverview/';
 const STEAM_LISTING_BASE = 'https://steamcommunity.com/market/listings/730/';
 const PORTFOLIO_DATA_PATH = path.join(__dirname, 'data', 'portfolio.json');
 const PORTFOLIO_HISTORY_PATH = path.join(__dirname, 'data', 'history.json');
-
 const IMAGE_CACHE_TTL = 1000 * 60 * 60 * 24 * 30; // 30 days
 const IMAGE_CACHE_DIR = path.join(__dirname, 'cached_images');
-const IMAGE_CACHE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp'];
+const IMAGE_CACHE_EXTENSIONS = ['.png', '.jpg', '.jpeg', '.webp', '.svg'];
 const imageCache = new Map();
 const priceCache = new Map();
 const PRICE_CACHE_TTL = 1000 * 60 * 15; // 15 minutes
 const HISTORY_LENGTH = 90;
 const USD_TO_EUR = 0.92;
+const LISTING_CACHE_TTL = 1000 * 60 * 60 * 6; // 6 hours
+const ITEM_HISTORY_CACHE_TTL = 1000 * 60 * 60 * 6; // 6 hours
+const PORTFOLIO_HISTORY_CACHE_TTL = 1000 * 60 * 30; // 30 minutes
+
+const listingPageCache = new Map();
+const itemHistoryCache = new Map();
+const portfolioHistoryCache = { entries: [], timestamp: 0 };
 
 let portfolioDefinition = [];
 
@@ -61,6 +67,35 @@ const readPortfolioHistory = async () => {
 
 const writePortfolioHistory = async (history) => {
   await fsPromises.writeFile(PORTFOLIO_HISTORY_PATH, JSON.stringify(history, null, 2));
+};
+
+
+const fetchListingPage = async (marketHashName) => {
+  if (!marketHashName) {
+    return null;
+  }
+
+  const cached = listingPageCache.get(marketHashName);
+
+  if (cached && Date.now() - cached.timestamp < LISTING_CACHE_TTL) {
+    return cached.html;
+  }
+
+  const encodedName = encodeURIComponent(marketHashName);
+  const response = await fetch(`${STEAM_LISTING_BASE}${encodedName}?l=english&currency=3`, {
+    headers: {
+      'User-Agent': 'cs2-portfolio-tool/1.0',
+      'Accept-Language': 'en-US,en;q=0.9'
+    }
+  });
+
+  if (!response.ok) {
+    throw new Error(`Steam listing responded with ${response.status}`);
+  }
+
+  const html = await response.text();
+  listingPageCache.set(marketHashName, { html, timestamp: Date.now() });
+  return html;
 };
 
 const toDateKey = (timestamp) => timestamp.slice(0, 10);
@@ -276,6 +311,10 @@ const contentTypeToExtension = (contentType = '') => {
     return '.jpg';
   }
 
+  if (contentType.includes('svg')) {
+    return '.svg';
+  }
+
   return '.png';
 };
 
@@ -328,6 +367,115 @@ const downloadAndCacheImage = async (marketHashName, imageUrl) => {
   return toWebPath(cachedPath);
 };
 
+const combineItemHistories = (histories, fallbackValue = 0) => {
+  if (!histories.length) {
+    return [];
+  }
+
+  const valueByDate = new Map();
+
+  histories.forEach(({ item, entries }) => {
+    if (!entries.length) {
+      return;
+    }
+
+    entries.forEach((entry) => {
+      const current = valueByDate.get(entry.date) ?? 0;
+      valueByDate.set(entry.date, current + entry.price * item.quantity);
+    });
+  });
+
+  if (!valueByDate.size && fallbackValue > 0) {
+    const today = new Date();
+    const key = today.toISOString().slice(0, 10);
+    valueByDate.set(key, fallbackValue);
+  }
+
+  if (!valueByDate.size) {
+    return [];
+  }
+
+  const sortedKeys = Array.from(valueByDate.keys()).sort();
+  const start = new Date(`${sortedKeys[0]}T00:00:00Z`);
+  const end = new Date(`${sortedKeys[sortedKeys.length - 1]}T00:00:00Z`);
+  const results = [];
+  let rollingValue = null;
+
+  for (let cursor = new Date(start); cursor <= end; cursor.setUTCDate(cursor.getUTCDate() + 1)) {
+    const dateKey = cursor.toISOString().slice(0, 10);
+
+    if (valueByDate.has(dateKey)) {
+      rollingValue = Number(valueByDate.get(dateKey).toFixed(2));
+    }
+
+    if (rollingValue !== null) {
+      const timestamp = new Date(cursor.getTime());
+      timestamp.setUTCHours(18, 0, 0, 0);
+      results.push({ date: dateKey, value: rollingValue, timestamp: timestamp.toISOString() });
+    }
+  }
+
+  return results;
+};
+
+const resolvePortfolioHistory = async (limit = 30) => {
+  if (portfolioHistoryCache.entries.length && Date.now() - portfolioHistoryCache.timestamp < PORTFOLIO_HISTORY_CACHE_TTL) {
+    return portfolioHistoryCache.entries.slice(-limit);
+  }
+
+  if (!portfolioDefinition.length) {
+    await loadPortfolioDefinition();
+  }
+
+  const baselineTotal = portfolioDefinition.reduce((sum, item) => {
+    const baselineUnit = convertToEur(item.baselineUnitPrice, item.baselineCurrency) ?? 0;
+    return sum + baselineUnit * item.quantity;
+  }, 0);
+
+  const histories = await Promise.all(
+    portfolioDefinition.map(async (item) => {
+      const entries = await fetchSteamItemHistory(item.marketHashName);
+      return { item, entries };
+    })
+  );
+
+  const combined = combineItemHistories(histories, baselineTotal);
+
+  if (!combined.length) {
+    await ensureHistoryFile();
+    const fallback = await readPortfolioHistory();
+    portfolioHistoryCache.entries = fallback;
+    portfolioHistoryCache.timestamp = Date.now();
+    return fallback.slice(-limit);
+  }
+
+  const missingItems = histories.filter(({ entries }) => !entries.length);
+
+  if (missingItems.length) {
+    const additional = missingItems.reduce((sum, { item }) => {
+      const baselineUnit = convertToEur(item.baselineUnitPrice, item.baselineCurrency) ?? 0;
+      return sum + baselineUnit * item.quantity;
+    }, 0);
+
+    if (additional > 0) {
+      combined.forEach((entry) => {
+        entry.value = Number((entry.value + additional).toFixed(2));
+      });
+    }
+  }
+
+  if (combined.length > HISTORY_LENGTH) {
+    combined.splice(0, combined.length - HISTORY_LENGTH);
+  }
+
+  portfolioHistoryCache.entries = combined;
+  portfolioHistoryCache.timestamp = Date.now();
+
+  await writePortfolioHistory(combined);
+
+  return combined.slice(-limit);
+};
+
 app.get('/api/portfolio', async (req, res) => {
   try {
     const snapshot = await resolvePortfolioSnapshot();
@@ -340,18 +488,15 @@ app.get('/api/portfolio', async (req, res) => {
 
 app.get('/api/history', async (req, res) => {
   try {
-    await ensureHistoryFile();
-    const history = await readPortfolioHistory();
     const limitParam = Number.parseInt(req.query.limit, 10);
     const limit = Number.isFinite(limitParam) && limitParam > 0 ? limitParam : 30;
-    const startIndex = Math.max(history.length - limit, 0);
-    return res.json({ success: true, entries: history.slice(startIndex) });
+    const history = await resolvePortfolioHistory(limit);
+    return res.json({ success: true, entries: history });
   } catch (error) {
     console.error('Failed to load history:', error);
     return res.status(500).json({ success: false, error: 'history_load_failed' });
   }
 });
-
 
 app.get('/api/price', async (req, res) => {
   const appId = (req.query.appid || '730').toString();
@@ -421,6 +566,83 @@ const extractSteamImageUrl = (html) => {
   return null;
 };
 
+const extractSteamPriceHistory = (html) => {
+  if (!html) {
+    return [];
+  }
+
+  const historyMatch = html.match(/var\s+line1\s*=\s*(\[[\s\S]*?\]);/);
+
+  if (!historyMatch || !historyMatch[1]) {
+    return [];
+  }
+
+  try {
+    const parsed = Function('"use strict";return (' + historyMatch[1] + ');')();
+
+    if (!Array.isArray(parsed)) {
+      return [];
+    }
+
+    return parsed
+      .map((entry) => {
+        if (!Array.isArray(entry) || entry.length < 2) {
+          return null;
+        }
+
+        const [dateString, priceValue] = entry;
+        if (!dateString) {
+          return null;
+        }
+
+        const price =
+          typeof priceValue === 'number'
+            ? priceValue
+            : parsePriceString(String(priceValue));
+
+        if (price === null) {
+          return null;
+        }
+
+        const date = new Date(`${dateString} UTC`);
+
+        if (Number.isNaN(date.getTime())) {
+          return null;
+        }
+
+        const dateKey = date.toISOString().slice(0, 10);
+        return { date: dateKey, price };
+      })
+      .filter(Boolean);
+  } catch (error) {
+    console.error('Failed to parse Steam price history payload:', error);
+    return [];
+  }
+};
+
+const fetchSteamItemHistory = async (marketHashName) => {
+  if (!marketHashName) {
+    return [];
+  }
+
+  const cached = itemHistoryCache.get(marketHashName);
+
+  if (cached && Date.now() - cached.timestamp < ITEM_HISTORY_CACHE_TTL) {
+    return cached.entries;
+  }
+
+  try {
+    const html = await fetchListingPage(marketHashName);
+    const entries = extractSteamPriceHistory(html).sort((a, b) => new Date(a.date) - new Date(b.date));
+    itemHistoryCache.set(marketHashName, { entries, timestamp: Date.now() });
+    return entries;
+  } catch (error) {
+    console.error(`Steam history fetch failed for ${marketHashName}:`, error);
+    return [];
+  }
+};
+
+
 app.get('/api/item-meta', async (req, res) => {
   const marketHashName = req.query.marketHashName;
 
@@ -442,19 +664,15 @@ app.get('/api/item-meta', async (req, res) => {
     return res.json({ success: Boolean(cached.image), image: cached.image });
   }
 
-  const encodedName = encodeURIComponent(marketHashName);
-
   try {
-    const response = await fetch(`${STEAM_LISTING_BASE}${encodedName}`, {
-      headers: {
-        'User-Agent': 'cs2-portfolio-tool/1.0',
-        'Accept-Language': 'en-US,en;q=0.9'
-      }
-    });
+    const html = await fetchListingPage(marketHashName);
+    const image = extractSteamImageUrl(html);
 
-    if (!response.ok) {
-      throw new Error(`Steam listing responded with ${response.status}`);
+    if (!image) {
+      imageCache.set(marketHashName, { image: null, timestamp: Date.now() });
+      return res.status(404).json({ success: false, error: 'image_not_found' });
     }
+
 
     const html = await response.text();
     const image = extractSteamImageUrl(html);
