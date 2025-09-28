@@ -69,6 +69,7 @@ const writePortfolioHistory = async (history) => {
   await fsPromises.writeFile(PORTFOLIO_HISTORY_PATH, JSON.stringify(history, null, 2));
 };
 
+
 const fetchListingPage = async (marketHashName) => {
   if (!marketHashName) {
     return null;
@@ -641,6 +642,7 @@ const fetchSteamItemHistory = async (marketHashName) => {
   }
 };
 
+
 app.get('/api/item-meta', async (req, res) => {
   const marketHashName = req.query.marketHashName;
 
@@ -664,6 +666,15 @@ app.get('/api/item-meta', async (req, res) => {
 
   try {
     const html = await fetchListingPage(marketHashName);
+    const image = extractSteamImageUrl(html);
+
+    if (!image) {
+      imageCache.set(marketHashName, { image: null, timestamp: Date.now() });
+      return res.status(404).json({ success: false, error: 'image_not_found' });
+    }
+
+
+    const html = await response.text();
     const image = extractSteamImageUrl(html);
 
     if (!image) {

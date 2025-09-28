@@ -172,6 +172,7 @@ const renderPortfolio = (snapshot) => {
     const shouldFetchImage = Boolean(item.marketHashName) &&
       (cachedImage === undefined || (typeof cachedImage === 'string' && cachedImage.startsWith('http')));
 
+
     if (shouldFetchImage) {
       fetchItemImage(item.marketHashName).then((fetchedImage) => {
         if (fetchedImage && fetchedImage !== imgEl.src) {
@@ -211,6 +212,7 @@ const updateHistoryRange = (entries) => {
     return;
   }
 
+
   if (entries.length === 1) {
     const onlyDate = new Date(entries[0].date);
     historyRangeEl.textContent = onlyDate.toLocaleDateString('de-DE', {
@@ -220,6 +222,7 @@ const updateHistoryRange = (entries) => {
     });
     return;
   }
+
 
   const firstDate = new Date(entries[0].date);
   const lastDate = new Date(entries[entries.length - 1].date);
@@ -316,6 +319,7 @@ const drawHistoryChart = () => {
   });
 
   const gradient = ctx.createLinearGradient(0, padding.top, 0, height - padding.bottom);
+
   gradient.addColorStop(0, 'rgba(79, 138, 255, 0.28)');
   gradient.addColorStop(1, 'rgba(79, 138, 255, 0)');
 
