@@ -1,0 +1,90 @@
+[
+  {
+    "name": "Prisma Case",
+    "type": "Case",
+    "description": "Normal Grade Container",
+    "quantity": 5000,
+    "baselineUnitPrice": 1.89,
+    "baselineCurrency": "USD",
+    "marketUrl": "https://steamcommunity.com/market/listings/730/Prisma%20Case",
+    "marketHashName": "Prisma Case",
+    "image": "/cached_images/e72e1a7c570914273f6fe33b0fb9b82b18ff952c.svg"
+  },
+  {
+    "name": "Glove Case",
+    "type": "Case",
+    "description": "Extraordinary Gloves Collection",
+    "quantity": 3,
+    "baselineUnitPrice": 2.55,
+    "baselineCurrency": "EUR",
+    "marketUrl": "https://steamcommunity.com/market/listings/730/Glove%20Case",
+    "marketHashName": "Glove Case",
+    "image": "/cached_images/537fee4b17c98dfbe45cab00a9f32fe041583050.svg"
+  },
+  {
+    "name": "M4A1-S | Leaded Glass (Factory New)",
+    "type": "Rifle Skin",
+    "description": "Factory New",
+    "quantity": 1,
+    "baselineUnitPrice": 17.85,
+    "baselineCurrency": "EUR",
+    "marketUrl": "https://steamcommunity.com/market/listings/730/M4A1-S%20%7C%20Leaded%20Glass%20(Factory%20New)",
+    "marketHashName": "M4A1-S | Leaded Glass (Factory New)",
+    "image": "/cached_images/4baa73fa74aadce7a2503856f234ea01948ca16d.svg"
+  },
+  {
+    "name": "★ Huntsman Knife | Lore (Minimal Wear)",
+    "type": "Knife Skin",
+    "description": "Minimal Wear",
+    "quantity": 1,
+    "baselineUnitPrice": 460,
+    "baselineCurrency": "EUR",
+    "marketUrl": "https://steamcommunity.com/market/listings/730/%E2%98%85%20Huntsman%20Knife%20%7C%20Lore%20(Minimal%20Wear)",
+    "marketHashName": "★ Huntsman Knife | Lore (Minimal Wear)",
+    "image": "/cached_images/fe38af925fe853aeffd45aa2a25c3c21d90dd6e4.svg"
+  },
+  {
+    "name": "AWP | Asiimov (Field-Tested)",
+    "type": "Sniper Skin",
+    "description": "Field-Tested",
+    "quantity": 1,
+    "baselineUnitPrice": 55,
+    "baselineCurrency": "EUR",
+    "marketUrl": "https://steamcommunity.com/market/listings/730/AWP%20%7C%20Asiimov%20(Field-Tested)",
+    "marketHashName": "AWP | Asiimov (Field-Tested)",
+    "image": "/cached_images/18fd71c0bc271864402b442ea7fd6650223159fe.svg"
+  },
+  {
+    "name": "SSG 08 | Dragonfire (Factory New)",
+    "type": "Sniper Skin",
+    "description": "Factory New",
+    "quantity": 1,
+    "baselineUnitPrice": 130,
+    "baselineCurrency": "EUR",
+    "marketUrl": "https://steamcommunity.com/market/listings/730/SSG%2008%20%7C%20Dragonfire%20(Factory%20New)",
+    "marketHashName": "SSG 08 | Dragonfire (Factory New)",
+    "image": "/cached_images/830078399b6926bb237a9a65332629e569c34488.svg"
+  },
+  {
+    "name": "AK-47 | Redline (Field-Tested)",
+    "type": "Rifle Skin",
+    "description": "Field-Tested",
+    "quantity": 1,
+    "baselineUnitPrice": 9,
+    "baselineCurrency": "EUR",
+    "marketUrl": "https://steamcommunity.com/market/listings/730/AK-47%20%7C%20Redline%20(Field-Tested)",
+    "marketHashName": "AK-47 | Redline (Field-Tested)",
+    "image": "/cached_images/1ab1a2dc28d2f1416a6e52e2eb77e18d34f8d5a9.svg"
+  },
+  {
+    "name": "M4A4 | Buzz Kill (Field-Tested)",
+    "type": "Rifle Skin",
+    "description": "Field-Tested",
+    "quantity": 1,
+    "baselineUnitPrice": 8,
+    "baselineCurrency": "EUR",
+    "marketUrl": "https://steamcommunity.com/market/listings/730/M4A4%20%7C%20Buzz%20Kill%20(Field-Tested)",
+    "marketHashName": "M4A4 | Buzz Kill (Field-Tested)",
+    "image": "/cached_images/65bce3149aa03b1e22d3d0641695037314c9c5dd.svg"
+  }
+]
