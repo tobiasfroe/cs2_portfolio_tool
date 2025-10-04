@@ -673,15 +673,6 @@ app.get('/api/item-meta', async (req, res) => {
       return res.status(404).json({ success: false, error: 'image_not_found' });
     }
 
-
-    const html = await response.text();
-    const image = extractSteamImageUrl(html);
-
-    if (!image) {
-      imageCache.set(marketHashName, { image: null, timestamp: Date.now() });
-      return res.status(404).json({ success: false, error: 'image_not_found' });
-    }
-
     try {
       const cachedPath = await downloadAndCacheImage(marketHashName, image);
       imageCache.set(marketHashName, { image: cachedPath, timestamp: Date.now() });

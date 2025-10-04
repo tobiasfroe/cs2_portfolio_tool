@@ -425,11 +425,17 @@ const initialize = async () => {
       console.warn('Portfolio snapshot konnte nicht geladen werden.');
     }
 
-    if (history?.success) {
+    const historyCard = document.querySelector('.card--history');
+    if (history?.success && history.entries && history.entries.length > 0) {
       renderHistoryChart(history.entries);
+      if (historyCard) {
+        historyCard.style.display = 'block';
+      }
     } else {
       console.warn('Historische Daten konnten nicht geladen werden.');
-      renderHistoryChart([]);
+      if (historyCard) {
+        historyCard.style.display = 'none';
+      }
     }
   } catch (error) {
     console.error('Initialisierung fehlgeschlagen:', error);
